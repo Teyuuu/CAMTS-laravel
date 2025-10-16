@@ -6,22 +6,23 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('attendance_logs', function (Blueprint $table) {
             $table->id();
+            $table->integer('employee_id');
+            $table->string('action'); // 'Time In' or 'Time Out'
+            $table->dateTime('timestamp');
             $table->timestamps();
+            
+            $table->index('employee_id');
+            $table->index('timestamp');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('attendance_logs');
     }
 };
+

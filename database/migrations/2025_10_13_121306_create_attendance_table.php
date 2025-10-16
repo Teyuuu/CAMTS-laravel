@@ -6,20 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('attendance', function (Blueprint $table) {
             $table->id();
+            $table->integer('employee_id');
+            $table->date('date');
+            $table->dateTime('time_in')->nullable();
+            $table->dateTime('time_out')->nullable();
+            $table->decimal('hours_worked', 5, 2)->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
+            
+            $table->index(['employee_id', 'date']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('attendance');
