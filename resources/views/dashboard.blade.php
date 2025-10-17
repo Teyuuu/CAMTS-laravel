@@ -10,7 +10,7 @@
     margin: 0 auto;
     padding: 0 20px;
   }
-  
+
   .dashboard-header {
     display: flex;
     justify-content: space-between;
@@ -20,36 +20,44 @@
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    flex-wrap: wrap;
+    gap: 15px;
   }
-  
+
   .welcome-section h1 {
     margin: 0;
     color: #2c3e50;
     font-size: 28px;
   }
-  
+
+  .welcome-section p {
+    color: #7f8c8d;
+    margin: 5px 0 0;
+  }
+
   .date-time {
     text-align: right;
     color: #7f8c8d;
+    flex-shrink: 0;
   }
-  
+
   .current-time {
     font-size: 24px;
     font-weight: bold;
     color: #e74c3c;
   }
-  
+
   .current-date {
     font-size: 14px;
   }
-  
+
   .kpi-section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     margin-bottom: 30px;
   }
-  
+
   .kpi-card {
     background: rgba(255,255,255,0.95);
     padding: 25px;
@@ -59,7 +67,7 @@
     position: relative;
     overflow: hidden;
   }
-  
+
   .kpi-card::before {
     content: '';
     position: absolute;
@@ -69,39 +77,39 @@
     height: 4px;
     background: var(--accent-color);
   }
-  
+
   .kpi-card.sales { --accent-color: #e74c3c; }
   .kpi-card.inventory { --accent-color: #27ae60; }
   .kpi-card.accounts { --accent-color: #f39c12; }
   .kpi-card.deliveries { --accent-color: #3498db; }
-  
+
   .kpi-value {
     font-size: 36px;
     font-weight: bold;
     color: var(--accent-color);
     margin-bottom: 8px;
   }
-  
+
   .kpi-label {
     color: #7f8c8d;
     font-size: 14px;
     margin-bottom: 10px;
   }
-  
+
   .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
     gap: 25px;
     margin-bottom: 30px;
   }
-  
+
   .dashboard-card {
     background: rgba(255,255,255,0.95);
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     overflow: hidden;
   }
-  
+
   .card-header {
     background: linear-gradient(135deg, #e74c3c, #c0392b);
     color: white;
@@ -109,13 +117,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }
-  
+
   .card-header h2 {
     margin: 0;
     font-size: 18px;
   }
-  
+
   .btn-small {
     padding: 6px 12px;
     border: none;
@@ -128,11 +138,11 @@
     transition: background 0.3s;
     text-decoration: none;
   }
-  
+
   .btn-small:hover {
     background: rgba(255,255,255,0.3);
   }
-  
+
   .chart-container {
     padding: 20px;
     height: 250px;
@@ -140,22 +150,22 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   .chart-container canvas {
     max-width: 100%;
     max-height: 100%;
   }
-  
+
   .data-table {
     max-height: 200px;
     overflow-y: auto;
   }
-  
+
   .data-table table {
     width: 100%;
     border-collapse: collapse;
   }
-  
+
   .data-table th {
     background: #f8f9fa;
     padding: 12px;
@@ -166,16 +176,16 @@
     position: sticky;
     top: 0;
   }
-  
+
   .data-table td {
     padding: 12px;
     border-bottom: 1px solid #e9ecef;
   }
-  
+
   .data-table tr:hover {
     background: #f8f9fa;
   }
-  
+
   .status-badge {
     padding: 4px 8px;
     border-radius: 12px;
@@ -183,27 +193,27 @@
     font-weight: bold;
     text-transform: uppercase;
   }
-  
+
   .status-available {
     background: #d5f4e6;
     color: #27ae60;
   }
-  
+
   .status-low-stock {
     background: #fef9e7;
     color: #f39c12;
   }
-  
+
   .status-out-of-stock {
     background: #fadbd8;
     color: #e74c3c;
   }
-  
+
   .amount {
     font-weight: bold;
     color: #27ae60;
   }
-  
+
   .quick-actions {
     background: rgba(255,255,255,0.95);
     padding: 25px;
@@ -211,13 +221,13 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     margin-bottom: 30px;
   }
-  
+
   .actions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
   }
-  
+
   .action-button {
     display: flex;
     align-items: center;
@@ -228,27 +238,90 @@
     border-radius: 8px;
     transition: transform 0.2s, box-shadow 0.2s;
   }
-  
+
   .action-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
     color: white;
   }
-  
+
   .action-button.sales { background: linear-gradient(135deg, #e74c3c, #c0392b); }
   .action-button.inventory { background: linear-gradient(135deg, #27ae60, #229954); }
   .action-button.accounts { background: linear-gradient(135deg, #f39c12, #e67e22); }
   .action-button.delivery { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
-  
+
   .action-icon {
     font-size: 24px;
     margin-right: 12px;
   }
-  
+
   .action-text {
     font-weight: bold;
   }
+
+  /* ✅ Mobile Responsiveness */
+  @media (max-width: 1024px) {
+    .dashboard-header {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .date-time {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .welcome-section h1 {
+      font-size: 22px;
+    }
+
+    .current-time {
+      font-size: 18px;
+    }
+
+    .kpi-value {
+      font-size: 28px;
+    }
+
+    .kpi-section {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .actions-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .kpi-section {
+      grid-template-columns: 1fr;
+    }
+
+    .actions-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .chart-container {
+      height: 180px;
+    }
+
+    .btn-small {
+      font-size: 11px;
+    }
+
+    .data-table th, .data-table td {
+      font-size: 12px;
+      padding: 8px;
+    }
+  }
 </style>
+
 
 <div class="dashboard-container">
   <!-- Header -->

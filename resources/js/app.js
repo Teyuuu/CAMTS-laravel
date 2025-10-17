@@ -39,3 +39,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    if (window.innerWidth <= 768) {
+        const sidebar = document.getElementById('sidebar');
+        if (touchEndX < touchStartX - 50) {
+            sidebar.classList.remove('mobile-open'); // Swipe left
+        }
+        if (touchEndX > touchStartX + 50 && touchStartX < 50) {
+            sidebar.classList.add('mobile-open'); // Swipe right from edge
+        }
+    }
+}

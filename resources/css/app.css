@@ -9,200 +9,483 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+/* ============================================
+   MOBILE RESPONSIVE STYLES
+   Add this to resources/css/app.css
+   ============================================ */
 
-/* resources/css/app.css */
-
-/* Dashboard grid */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+/* Base responsive utilities */
+* {
+    box-sizing: border-box;
 }
 
-/* Cards for charts + tables */
-.card {
-  background: rgba(255,255,255,0.9);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+img {
+    max-width: 100%;
+    height: auto;
 }
 
-/* Tables */
-.card table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
+/* ============================================
+   BREAKPOINTS
+   ============================================ */
+/* Mobile: 320px - 480px */
+/* Tablet: 481px - 768px */
+/* iPad: 768px - 1024px */
+/* Desktop: 1025px+ */
+
+/* ============================================
+   TABLET & BELOW (iPad, Android Tablets)
+   ============================================ */
+@media (max-width: 1024px) {
+    /* Sidebar adjustments */
+    #sidebar {
+        width: 70px;
+    }
+    
+    #sidebar .sidebar-header span,
+    #sidebar ul li a span {
+        opacity: 0;
+        display: none;
+    }
+    
+    #content {
+        margin-left: 90px;
+        padding: 20px;
+    }
+    
+    /* Dashboard grid to single column */
+    .dashboard-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+    
+    /* KPI cards stack on tablet */
+    .kpi-section,
+    .delivery-stats,
+    .alerts-header,
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px;
+    }
+    
+    /* Form grids to 2 columns */
+    .form-grid,
+    .form-row {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px;
+    }
+    
+    /* Inventory grid to single column */
+    .inventory-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Actions grid */
+    .actions-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    /* Table responsive */
+    table {
+        font-size: 13px;
+    }
+    
+    table th,
+    table td {
+        padding: 8px 6px;
+    }
+    
+    /* Chart container height */
+    .chart-container {
+        height: 200px;
+    }
 }
 
-.card table th, .card table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-}
-
-.card table th {
-  background: #e74c3c;
-  color: #fff;
-}
-
-.card table tr:hover {
-  background: #f8f9fa;
-}
-
-/* Forms */
-form {
-  background: rgba(255,255,255,0.95);
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  margin-bottom: 30px;
-}
-
-form label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-form input, form select, form textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 20px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: border-color 0.3s;
-}
-
-form input:focus, form select:focus, form textarea:focus {
-  outline: none;
-  border-color: #e74c3c;
-}
-
-form button {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  padding: 15px 30px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 16px;
-  transition: background 0.3s;
-}
-
-form button:hover {
-  background: #c0392b;
-}
-
-/* Buttons */
-.btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.btn-primary {
-  background: #e74c3c;
-  color: white;
-}
-
-.btn-primary:hover {
-  background: #c0392b;
-}
-
-.btn-success {
-  background: #27ae60;
-  color: white;
-}
-
-.btn-success:hover {
-  background: #219a52;
-}
-
-.btn-secondary {
-  background: #95a5a6;
-  color: white;
-}
-
-.btn-secondary:hover {
-  background: #7f8c8d;
-}
-
-.btn-small {
-  padding: 6px 12px;
-  font-size: 12px;
-}
-
-/* Status badges */
-.status-badge {
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.status-available {
-  background: #d5f4e6;
-  color: #27ae60;
-}
-
-.status-low-stock {
-  background: #fef9e7;
-  color: #f39c12;
-}
-
-.status-out-of-stock {
-  background: #fadbd8;
-  color: #e74c3c;
-}
-
-.status-delivered {
-  background: #d5f4e6;
-  color: #27ae60;
-}
-
-.status-pending {
-  background: #fef9e7;
-  color: #f39c12;
-}
-
-/* Utility classes */
-.text-center {
-  text-align: center;
-}
-
-.mt-20 {
-  margin-top: 20px;
-}
-
-.mb-20 {
-  margin-bottom: 20px;
-}
-
-/* Responsive */
+/* ============================================
+   MOBILE (iPhone, Android Phones)
+   ============================================ */
 @media (max-width: 768px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  #content {
-    margin-left: 70px;
-  }
-  
-  #sidebar {
-    width: 70px;
-  }
-  
-  #sidebar .sidebar-header span,
-  #sidebar ul li a span {
-    opacity: 0;
-  }
+    /* Hide sidebar by default on mobile */
+    #sidebar {
+        width: 70px;
+        transform: translateX(0);
+    }
+    
+    #sidebar.mobile-open {
+        width: 220px;
+        box-shadow: 4px 0 8px rgba(0,0,0,0.3);
+    }
+    
+    #sidebar.mobile-open .sidebar-header span,
+    #sidebar.mobile-open ul li a span {
+        opacity: 1;
+        display: inline;
+    }
+    
+    #content {
+        margin-left: 0;
+        padding: 15px;
+        width: 100%;
+    }
+    
+    /* Hamburger menu */
+    #sidebar-toggle {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1001;
+        background: #e74c3c;
+        border-radius: 50%;
+        padding: 8px;
+    }
+    
+    /* All grids to single column */
+    .dashboard-grid,
+    .kpi-section,
+    .delivery-stats,
+    .alerts-header,
+    .summary-grid,
+    .inventory-grid,
+    .actions-grid,
+    .form-grid,
+    .form-row,
+    .attendance-header {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+    
+    /* Headers */
+    h1 {
+        font-size: 24px !important;
+    }
+    
+    h2 {
+        font-size: 20px !important;
+    }
+    
+    h3 {
+        font-size: 18px !important;
+    }
+    
+    /* Dashboard header */
+    .dashboard-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .date-time {
+        text-align: center;
+        margin-top: 15px;
+    }
+    
+    /* KPI cards */
+    .kpi-value,
+    .stat-value {
+        font-size: 28px !important;
+    }
+    
+    /* Tables - Horizontal scroll */
+    .data-table,
+    .accounts-table,
+    .sales-table,
+    .delivery-table,
+    .inventory-history,
+    .attendance-table,
+    .alerts-table {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    table {
+        min-width: 600px;
+        font-size: 12px;
+    }
+    
+    table th,
+    table td {
+        padding: 8px 4px;
+        white-space: nowrap;
+    }
+    
+    /* Cards */
+    .card,
+    .product-card,
+    .dashboard-card,
+    .kpi-card,
+    .stat-card {
+        padding: 15px;
+    }
+    
+    /* Forms */
+    form {
+        padding: 20px;
+    }
+    
+    .form-group label {
+        font-size: 14px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px; /* Prevent zoom on iOS */
+        padding: 10px;
+    }
+    
+    /* Buttons */
+    .btn,
+    .btn-primary,
+    .btn-restock,
+    .btn-consume {
+        padding: 12px 20px;
+        font-size: 14px;
+        width: 100%;
+    }
+    
+    .action-button {
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    /* Chart container */
+    .chart-container {
+        height: 180px;
+    }
+    
+    /* Clock display */
+    .clock-display {
+        font-size: 36px !important;
+    }
+    
+    .date-display {
+        font-size: 18px !important;
+    }
+    
+    /* Modal */
+    .modal-content {
+        width: 95%;
+        margin: 20px auto;
+        padding: 20px;
+    }
+    
+    /* Filter controls */
+    .filter-controls,
+    .table-controls,
+    .controls-left,
+    .controls-right {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .search-box,
+    .filter-select {
+        width: 100%;
+    }
+}
+
+/* ============================================
+   SMALL MOBILE (iPhone SE, Small Android)
+   ============================================ */
+@media (max-width: 480px) {
+    #content {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 20px !important;
+    }
+    
+    h2 {
+        font-size: 18px !important;
+    }
+    
+    /* KPI values smaller */
+    .kpi-value,
+    .stat-value {
+        font-size: 24px !important;
+    }
+    
+    .kpi-label,
+    .stat-label {
+        font-size: 12px !important;
+    }
+    
+    /* Cards more compact */
+    .card,
+    .product-card,
+    .dashboard-card {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+    
+    /* Table font size */
+    table {
+        font-size: 11px;
+    }
+    
+    /* Clock smaller */
+    .clock-display {
+        font-size: 28px !important;
+    }
+    
+    /* Buttons full width */
+    .btn,
+    .btn-primary,
+    .btn-restock,
+    .btn-consume,
+    .action-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    /* Status badges */
+    .status-badge,
+    .priority-badge {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+}
+
+/* ============================================
+   LANDSCAPE ORIENTATION
+   ============================================ */
+@media (max-width: 896px) and (orientation: landscape) {
+    #sidebar {
+        width: 60px;
+    }
+    
+    #content {
+        margin-left: 70px;
+        padding: 15px;
+    }
+    
+    .chart-container {
+        height: 150px;
+    }
+    
+    .kpi-section,
+    .delivery-stats {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+}
+
+/* ============================================
+   TOUCH IMPROVEMENTS
+   ============================================ */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger tap targets for touch devices */
+    button,
+    a,
+    input[type="submit"],
+    .btn {
+        min-height: 44px; /* iOS recommended */
+        min-width: 44px;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .btn:hover,
+    .action-button:hover,
+    table tr:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    /* Add active state instead */
+    .btn:active,
+    .action-button:active {
+        opacity: 0.7;
+    }
+}
+
+/* ============================================
+   iOS SPECIFIC FIXES
+   ============================================ */
+@supports (-webkit-touch-callout: none) {
+    /* Fix for iOS Safari viewport */
+    body {
+        min-height: -webkit-fill-available;
+    }
+    
+    /* Prevent zoom on input focus */
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+    
+    /* Fix for iOS safe area */
+    #content {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* ============================================
+   ANDROID SPECIFIC
+   ============================================ */
+@media (max-width: 768px) {
+    /* Fix for Android Chrome address bar */
+    body {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    #sidebar,
+    .btn,
+    .action-buttons,
+    .filter-controls {
+        display: none !important;
+    }
+    
+    #content {
+        margin-left: 0;
+        padding: 0;
+    }
+    
+    .card,
+    .dashboard-card {
+        break-inside: avoid;
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES FOR RESPONSIVE
+   ============================================ */
+.hide-mobile {
+    display: block;
+}
+
+.show-mobile {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .hide-mobile {
+        display: none !important;
+    }
+    
+    .show-mobile {
+        display: block !important;
+    }
+}
+
+/* Responsive text */
+.text-responsive {
+    font-size: clamp(14px, 2vw, 18px);
+}
+
+/* Responsive spacing */
+.spacing-responsive {
+    padding: clamp(10px, 3vw, 30px);
+    margin: clamp(10px, 2vw, 20px);
 }
