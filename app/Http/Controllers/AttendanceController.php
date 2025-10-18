@@ -16,10 +16,11 @@ class AttendanceController extends Controller
     {
         // Get all employees (you can replace this with actual database query)
         $employees = [
-            ['id' => 1, 'name' => 'John Doe', 'position' => 'Manager'],
-            ['id' => 2, 'name' => 'Jane Smith', 'position' => 'Driver'],
-            ['id' => 3, 'name' => 'Mike Johnson', 'position' => 'Worker'],
-            ['id' => 4, 'name' => 'Sarah Williams', 'position' => 'Supervisor'],
+            ['id' => 1, 'name' => 'Christian Mendoza', 'position' => 'Owner'],
+            ['id' => 2, 'name' => 'Jefferson Pondare', 'position' => 'Manager'],
+            ['id' => 3, 'name' => 'John Clark Olao', 'position' => 'Helper'],
+            ['id' => 4, 'name' => 'Christian Denosta', 'position' => 'Helper'],
+            ['id' => 5, 'name' => 'Miguel Masinadiong', 'position' => 'Helper'],
         ];
         
         // Get today's logs
@@ -50,115 +51,100 @@ class AttendanceController extends Controller
     }
     
     public function timeIn(Request $request)
-    {
-        $validated = $request->validate([
-            'employee_id' => 'required|integer',
-            'timestamp' => 'required|string',
-        ]);
-        
-        try {
-            $timestamp = Carbon::parse($validated['timestamp']);
-            $today = $timestamp->toDateString();
-            
-            DB::transaction(function () use ($validated, $timestamp, $today) {
-                // Check if already timed in today
-                $existingAttendance = Attendance::where('employee_id', $validated['employee_id'])
-                    ->whereDate('date', $today)
-                    ->first();
-                
-                if ($existingAttendance && $existingAttendance->time_in) {
-                    throw new \Exception('Already timed in today');
-                }
-                
-                // Create or update attendance record
-                if ($existingAttendance) {
-                    $existingAttendance->update([
-                        'time_in' => $timestamp,
-                    ]);
-                } else {
-                    Attendance::create([
-                        'employee_id' => $validated['employee_id'],
-                        'date' => $today,
-                        'time_in' => $timestamp,
-                    ]);
-                }
-                
-                // Log the action
-                AttendanceLog::create([
-                    'employee_id' => $validated['employee_id'],
-                    'action' => 'Time In',
-                    'timestamp' => $timestamp,
-                ]);
-            });
-            
-            return response()->json([
-                'success' => true,
-                'message' => 'Time in recorded successfully'
+{
+    $validated = $request->validate([
+        'employee_id' => 'required|integer',
+        'timestamp' => 'required|string',
+    ]);
+
+    try {
+        $timestamp = Carbon::parse($validated['timestamp'])->timezone('Asia/Manila');
+        $today = $timestamp->toDateString();
+
+        DB::transaction(function () use ($validated, $timestamp, $today) {
+            $attendance = Attendance::firstOrNew([
+                'employee_id' => $validated['employee_id'],
+                'date' => $today,
             ]);
-            
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], 400);
-        }
+
+            if ($attendance->time_in) {
+                throw new \Exception('Already timed in today');
+            }
+
+            $attendance->time_in = $timestamp;
+            $attendance->save();
+
+            AttendanceLog::create([
+                'employee_id' => $validated['employee_id'],
+                'action' => 'Time In',
+                'timestamp' => $timestamp,
+            ]);
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Time in recorded successfully (Manila time)',
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage(),
+        ], 400);
     }
+}
+
     
-    public function timeOut(Request $request)
-    {
-        $validated = $request->validate([
-            'employee_id' => 'required|integer',
-            'timestamp' => 'required|string',
-        ]);
-        
-        try {
-            $timestamp = Carbon::parse($validated['timestamp']);
-            $today = $timestamp->toDateString();
-            
-            DB::transaction(function () use ($validated, $timestamp, $today) {
-                // Find today's attendance record
-                $attendance = Attendance::where('employee_id', $validated['employee_id'])
-                    ->whereDate('date', $today)
-                    ->first();
-                
-                if (!$attendance || !$attendance->time_in) {
-                    throw new \Exception('Please time in first');
-                }
-                
-                if ($attendance->time_out) {
-                    throw new \Exception('Already timed out today');
-                }
-                
-                // Calculate hours worked
-                $timeIn = Carbon::parse($attendance->time_in);
-                $hoursWorked = $timeIn->diffInMinutes($timestamp) / 60;
-                
-                // Update attendance record
-                $attendance->update([
-                    'time_out' => $timestamp,
-                    'hours_worked' => round($hoursWorked, 2),
-                ]);
-                
-                // Log the action
-                AttendanceLog::create([
-                    'employee_id' => $validated['employee_id'],
-                    'action' => 'Time Out',
-                    'timestamp' => $timestamp,
-                ]);
-            });
-            
-            return response()->json([
-                'success' => true,
-                'message' => 'Time out recorded successfully'
+   public function timeOut(Request $request)
+{
+    $validated = $request->validate([
+        'employee_id' => 'required|integer',
+        'timestamp' => 'required|string',
+    ]);
+
+    try {
+        $timestamp = Carbon::parse($validated['timestamp'])->timezone('Asia/Manila');
+        $today = $timestamp->toDateString();
+
+        DB::transaction(function () use ($validated, $timestamp, $today) {
+            $attendance = Attendance::where('employee_id', $validated['employee_id'])
+                ->whereDate('date', $today)
+                ->first();
+
+            if (!$attendance || !$attendance->time_in) {
+                throw new \Exception('Please time in first');
+            }
+
+            if ($attendance->time_out) {
+                throw new \Exception('Already timed out today');
+            }
+
+            $timeIn = Carbon::parse($attendance->time_in)->timezone('Asia/Manila');
+            $hoursWorked = $timeIn->diffInMinutes($timestamp) / 60;
+
+            $attendance->update([
+                'time_out' => $timestamp,
+                'hours_worked' => round($hoursWorked, 2),
             ]);
-            
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], 400);
-        }
+
+            AttendanceLog::create([
+                'employee_id' => $validated['employee_id'],
+                'action' => 'Time Out',
+                'timestamp' => $timestamp,
+            ]);
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Time out recorded successfully (Manila time)',
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage(),
+        ], 400);
     }
+}
+
     
     private function getWeeklyAttendance($employees)
     {
@@ -173,11 +159,11 @@ class AttendanceController extends Controller
             
             // Check if late (assuming work starts at 8:00 AM)
             $isLate = false;
-            if ($attendance->time_in) {
-                $timeIn = Carbon::parse($attendance->time_in);
-                $standardTime = Carbon::parse($attendance->date . ' 08:00:00');
-                $isLate = $timeIn->gt($standardTime);
-            }
+        if ($attendance->time_in) {
+            $timeIn = Carbon::parse($attendance->time_in);
+            $standardTime = Carbon::parse(Carbon::parse($attendance->date)->format('Y-m-d') . ' 08:00:00');
+            $isLate = $timeIn->gt($standardTime);
+        }
             
             return [
                 'date' => Carbon::parse($attendance->date),

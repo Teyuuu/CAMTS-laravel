@@ -161,6 +161,16 @@
       flex-direction: column;
       gap: 10px;
     }
+    .table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on mobile */
+}
+
+.table-responsive table {
+  width: 100%;
+  min-width: 700px; /* adjust this depending on how wide your table columns are */
+}
   }
 </style>
 
@@ -188,7 +198,7 @@
   <!-- Alerts Table -->
   <div class="alerts-table">
     <h2 class="table-header">Active Alerts ({{ count($alerts_data ?? []) }})</h2>
-
+    <div class="table-responsive">
     <table id="alertsTable">
       <thead>
         <tr>

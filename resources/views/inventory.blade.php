@@ -11,11 +11,12 @@
     padding: 20px;
   }
 
-  h1 {
+  h1, h2 {
     font-size: 2rem;
     font-weight: bold;
     color: #2c3e50;
     margin-bottom: 25px;
+    text-align:center;
   }
 
   /* Alerts */
@@ -216,6 +217,27 @@
       grid-template-columns: 1fr;
     }
   }
+  @media (max-width: 480px) {
+    .product-card {
+      width:245px;
+    }
+    h3{
+      text-align:center;
+    }
+    .restock-input {
+      width:160px;
+    }
+    .table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on mobile */
+}
+
+.table-responsive table {
+  width: 100%;
+  min-width: 700px; /* adjust this depending on how wide your table columns are */
+}
+  }
 </style>
 
 <div class="inventory-container">
@@ -331,6 +353,7 @@
   <!-- Inventory History -->
   <div class="inventory-history">
     <h2 class="history-header">Recent Inventory Activity</h2>
+    <div class="table-responsive">
     <table class="history-table">
       <thead>
         <tr>

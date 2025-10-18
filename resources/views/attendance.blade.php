@@ -202,6 +202,16 @@
     .btn-time-out {
       width: 100%;
     }
+    .table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on mobile */
+}
+
+.table-responsive table {
+  width: 100%;
+  min-width: 700px; /* adjust this depending on how wide your table columns are */
+}
   }
 </style>
 
@@ -245,7 +255,7 @@
   <!-- Attendance History -->
   <div class="attendance-table">
     <h2 class="table-header">Attendance History</h2>
-
+    <div class="table-responsive">
     <table>
       <thead>
         <tr>
@@ -312,7 +322,7 @@
       currentEmployee = this.value;
       statusDiv.innerHTML = '<strong>Status:</strong> <span style="color:#e74c3c;">Clocked Out</span>';
       timeInBtn.disabled = false;
-      timeOutBtn.disabled = true;
+      timeOutBtn.disabled = false;
     } else {
       currentEmployee = null;
       statusDiv.innerHTML = '<strong>Status:</strong> Please select an employee';
